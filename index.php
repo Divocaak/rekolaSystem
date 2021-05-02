@@ -60,7 +60,7 @@ require_once "scripts/config.php";
                             if ($result = mysqli_query($link, $sql)) {
                                 if(mysqli_num_rows($result) > 0){
                                     while ($row = mysqli_fetch_row($result)) {
-                                        echo '<option value="' . $row[0] .'">' . $row[1] . ' ' . $row[2] .'</option>';
+                                        echo '<option value="' . intval($row[0]) .'">' . $row[1] . ' ' . $row[2] .'</option>';
                                     }
                                 }
                                 else{
@@ -79,58 +79,67 @@ require_once "scripts/config.php";
         <div class="col-4">
             <div class="row">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Přidat z hodnot
-                        <br>
-                        <form>
-                            <div class="col">
-                                <label for="input_from" class="form-label">Den:</label>
-                                <input type="date" class="form-control" name="input_day" id="input_day">
-                            </div>
-                            <div class="col">
-                                <label for="input_from" class="form-label">Od:</label>
-                                <input type="time" class="form-control" name="input_from" id="input_from">
-                            </div>
-                            <div class="col">
-                                <label for="input_to" class="form-label">Do:</label>
-                                <input type="time" class="form-control" name="input_to" id="input_to">
-                            </div>
-                            <div class="col">
-                                <p>Převládající činnost:</p>
-                                <select name="input_type" id="input_type" class="form-select"
-                                    aria-label="Default select example">
-                                    <option value="1">Nespecifikováno</option>
-                                    <option value="2">Terén</option>
-                                    <option value="3">Dílna</option>
-                                    <option value="4">Baterky/GPS</option>
-                                    <option value="5">Svoz</option>
-                                    <option value="6">Jiné</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <button id="addInputFromVals" class="btn btn-primary">Přidat zápis</button>
-                            </div>
-                        </form>
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
-                        Přidat z textu TODO
+                        Přidat z textu
                     </label>
+                </div>
+
+                <div id="addFromValues">
+                    <form>
+                        <div class="col">
+                            <label for="input_from" class="form-label">Den:</label>
+                            <input type="date" class="form-control" name="input_day" id="input_day">
+                        </div>
+                        <div class="col">
+                            <label for="input_from" class="form-label">Od:</label>
+                            <input type="time" class="form-control" name="input_from" id="input_from">
+                        </div>
+                        <div class="col">
+                            <label for="input_to" class="form-label">Do:</label>
+                            <input type="time" class="form-control" name="input_to" id="input_to">
+                        </div>
+                        <div class="col">
+                            <p>Převládající činnost:</p>
+                            <select name="input_type" id="input_type" class="form-select"
+                                aria-label="Default select example">
+                                <option value="1">Nespecifikováno</option>
+                                <option value="2">Terén</option>
+                                <option value="3">Dílna</option>
+                                <option value="4">Baterky/GPS</option>
+                                <option value="5">Svoz</option>
+                                <option value="6">Jiné</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button id="addInputFromVals" class="btn btn-primary">Přidat zápis</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="addFromText" class="collapse">
+                    <p>TODO</p>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-        
-                
+        <div class="col-4" id="writeTableCont">
+
+
         </div>
 
 
     </div>
     <script>
     $(document).ready(function() {
+        $('#addFromValues').collapse('show');
+        $('#addFromText').collapse('hide');
+
         $('#addInputFromVals').click(function() {
             var inputFrom = $("#input_from").val();
             var inputTo = $("#input_to").val();
@@ -159,7 +168,7 @@ require_once "scripts/config.php";
         $("#writeTableBtn").click(function() {
             var month = $("#table_month").val();
             var year = $("#table_year").val();
-            var user = $("#table_user").length() ? $("#table_user").val() : $("#userIdHolder").data(
+            var user = $("#table_user").length ? $("#table_user").val() : $("#userIdHolder").data(
                 'userId');
 
             $.ajax({
@@ -168,13 +177,24 @@ require_once "scripts/config.php";
                 data: {
                     table_month: month,
                     table_year: year,
-                    table_user: user
+                    table_user: user,
                 },
                 success: function(response) {
-                    alert(response);
+                    $("#writeTableCont").html(response);
                 }
             });
         });
+
+        $('#flexRadioDefault1,#flexRadioDefault2').on('click', function(e) {
+            e.stopPropagation();
+            if (this.id == 'flexRadioDefault1') {
+                $('#addFromValues').collapse('show');
+                $('#addFromText').collapse('hide');
+            } else if (this.id == 'flexRadioDefault2') {
+                $('#addFromValues').collapse('hide');
+                $('#addFromText').collapse('show');
+            }
+        })
     });
     </script>
 
