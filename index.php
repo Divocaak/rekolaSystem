@@ -123,19 +123,8 @@ require_once "scripts/config.php";
             </div>
         </div>
         <div class="col-4">
-        <p>Tabulka za MĚSÍC ROK pracovníka JMÉNO PŘÍJMENÍ</p>
-            <table class="table table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Od</th>
-                        <th scope="col">Do</th>
-                        <th scope="col">Činnost</th>
-                        <th scope="col">Celkem</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        
+                
         </div>
 
 
