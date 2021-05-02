@@ -25,22 +25,58 @@ require_once "scripts/config.php";
 </head>
 
 <body>
-
     <div class="row">
-        <div class="col-3">
+        <div class="col-4">
             <div class="container">
                 <p><?php echo "Přihlášen jako <b>" . $_SESSION["fName"] . " " . $_SESSION["lName"] . "</b>";?>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-6">
                     <a href="changePass.php" class="btn btn-warning">Změnit heslo</a>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     <a href="scripts/logout.php" class="btn btn-danger">Odhlásit</a>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a id="writeTableBtn" class="btn btn-primary">Vypsat</a>
+                    </div>
+                    <div class="col">
+                        <label for="table_month" class="form-label">Měsíc</label>
+                        <input type="number" class="form-control" name="table_month" id="table_month">
+                    </div>
+                    <div class="col">
+                        <label for="table_year" class="form-label">Rok</label>
+                        <input type="number" class="form-control" name="table_year" id="table_year">
+                    </div>
+                    <?php
+                        if($_SESSION["isAdmin"] == true){
+                            echo '<div class="col" data-user-id=' . $_SESSION["id"] . ' id="userIdHolder">';
+                            echo '<p>Pracovník</p>';
+                            echo '<select name="table_user" id="table_user" class="form-select" 
+                            aria-label="Default select example">';
+
+                            $sql = 'SELECT id, fName, lName FROM users;';
+                            if ($result = mysqli_query($link, $sql)) {
+                                if(mysqli_num_rows($result) > 0){
+                                    while ($row = mysqli_fetch_row($result)) {
+                                        echo '<option value="' . $row[0] .'">' . $row[1] . ' ' . $row[2] .'</option>';
+                                    }
+                                }
+                                else{
+                                    echo '<option value="x">Error</option>';
+                                }
+                                mysqli_free_result($result);
+                            }
+                            mysqli_close($link);
+                            echo '</select>';
+                            echo '</div>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-4">
             <div class="row">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -86,6 +122,21 @@ require_once "scripts/config.php";
                 </div>
             </div>
         </div>
+        <div class="col-4">
+        <p>Tabulka za MĚSÍC ROK pracovníka JMÉNO PŘÍJMENÍ</p>
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Od</th>
+                        <th scope="col">Do</th>
+                        <th scope="col">Činnost</th>
+                        <th scope="col">Celkem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
 
     </div>
@@ -114,6 +165,26 @@ require_once "scripts/config.php";
             } else {
                 alert("Zadejte všechny údaje");
             }
+        });
+
+        $("#writeTableBtn").click(function() {
+            var month = $("#table_month").val();
+            var year = $("#table_year").val();
+            var user = $("#table_user").length() ? $("#table_user").val() : $("#userIdHolder").data(
+                'userId');
+
+            $.ajax({
+                url: 'scripts/writeTable.php',
+                type: 'post',
+                data: {
+                    table_month: month,
+                    table_year: year,
+                    table_user: user
+                },
+                success: function(response) {
+                    alert(response);
+                }
+            });
         });
     });
     </script>
