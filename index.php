@@ -28,6 +28,9 @@ require_once "scripts/config.php";
 
     <div class="row">
         <div class="col-3">
+            <div class="container">
+                <p><?php echo "Přihlášen jako <b>" . $_SESSION["fName"] . " " . $_SESSION["lName"] . "</b>";?>
+            </div>
             <div class="row">
                 <div class="col">
                     <a href="changePass.php" class="btn btn-warning">Změnit heslo</a>
@@ -45,15 +48,33 @@ require_once "scripts/config.php";
                         Přidat z hodnot
                         <br>
                         <form>
-                            <div class="mb-3">
-                                <label for="from" class="form-label">Od:</label>
-                                <input type="time" class="form-control" id="from">
+                            <div class="col">
+                                <label for="input_from" class="form-label">Den:</label>
+                                <input type="date" class="form-control" name="input_day" id="input_day">
                             </div>
-                            <div class="mb-3">
-                                <label for="to" class="form-label">Do:</label>
-                                <input type="time" class="form-control" id="to">
+                            <div class="col">
+                                <label for="input_from" class="form-label">Od:</label>
+                                <input type="time" class="form-control" name="input_from" id="input_from">
                             </div>
-                            <button type="submit" class="btn btn-primary">Přidat zápis</button>
+                            <div class="col">
+                                <label for="input_to" class="form-label">Do:</label>
+                                <input type="time" class="form-control" name="input_to" id="input_to">
+                            </div>
+                            <div class="col">
+                                <p>Převládající činnost:</p>
+                                <select name="input_type" id="input_type" class="form-select"
+                                    aria-label="Default select example">
+                                    <option value="1">Nespecifikováno</option>
+                                    <option value="2">Terén</option>
+                                    <option value="3">Dílna</option>
+                                    <option value="4">Baterky/GPS</option>
+                                    <option value="5">Svoz</option>
+                                    <option value="6">Jiné</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button id="addInputFromVals" class="btn btn-primary">Přidat zápis</button>
+                            </div>
                         </form>
                     </label>
                 </div>
@@ -65,7 +86,37 @@ require_once "scripts/config.php";
                 </div>
             </div>
         </div>
+
+
     </div>
+    <script>
+    $(document).ready(function() {
+        $('#addInputFromVals').click(function() {
+            var inputFrom = $("#input_from").val();
+            var inputTo = $("#input_to").val();
+            var inputDay = $("#input_day").val();
+            var inputType = $("#input_type").val();
+
+            if (inputFrom && inputTo && inputDay) {
+                $.ajax({
+                    url: 'scripts/addInputFromValues.php',
+                    type: 'post',
+                    data: {
+                        input_from: inputFrom,
+                        input_to: inputTo,
+                        input_day: inputDay,
+                        input_type: inputType
+                    },
+                    success: function(response) {
+                        alert(response);
+                    }
+                });
+            } else {
+                alert("Zadejte všechny údaje");
+            }
+        });
+    });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
