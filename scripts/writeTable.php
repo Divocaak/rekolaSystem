@@ -35,9 +35,9 @@ if ($result = mysqli_query($link, $sql)) {
 mysqli_close($link);
 
 if ($return != ""){
-    echo '<div class="col-12"><h4 class="pt-5">
+    echo '<h4 class="pt-5">
     Tabulka za měsíc číslo ' . $_POST["table_month"] . '
-    roku ' . $_POST["table_year"] . ' pracovníka ' . $lName . ' ' . $fName . '<h4></div>
+    roku ' . $_POST["table_year"] . ' pracovníka ' . $lName . ' ' . $fName . '</h4>
     <div class="table-responsive">
     <table class="table table-hover">
     <thead>

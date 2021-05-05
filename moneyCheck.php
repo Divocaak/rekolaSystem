@@ -49,7 +49,7 @@ require_once "scripts/config.php";
         <div class="col-12 pt-3 d-flex justify-content-center">
             <a id="writeTableBtn" class="btn btn-primary pink-primary">Vypsat</a>
         </div>
-        <div class="col-xs-12 col-md-4" id="writeTableCont">
+        <div class="col-12" id="writeTableCont">
         </div>
     </div>
     <script>

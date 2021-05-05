@@ -121,43 +121,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 
 <body>
-    <br><br><br>
-    <div class="d-flex align-items-center justify-content-center">
-        <h2>Registrujte se</h2>
-    </div>
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="row mx-3">
+        <div class="col-12 pt-5 d-flex justify-content-center">
+            <h1>Rekola IS České Budějovice</h1>
+        </div>
+        <div class="col-12 pt-5 d-flex justify-content-center">
+            <h2>Registrace</h2>
+        </div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Uživatelské jméno</label>
                 <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
             </div>
-            <div class="form-group <?php echo (!empty($fName_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($fName_err)) ? 'has-error' : ''; ?>">
                 <label>Křestní jméno</label>
                 <input type="text" name="fName" class="form-control" value="<?php echo $fName; ?>">
                 <span class="help-block"><?php echo $fName_err; ?></span>
             </div>
-            <div class="form-group <?php echo (!empty($lName_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($lName_err)) ? 'has-error' : ''; ?>">
                 <label>Příjmení</label>
                 <input type="text" name="lName" class="form-control" value="<?php echo $lName; ?>">
                 <span class="help-block"><?php echo $lName_err; ?></span>
             </div>
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                 <label>Heslo</label>
                 <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
                 <span class="help-block"><?php echo $password_err; ?></span>
             </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                 <label>Heslo znovu</label>
                 <input type="password" name="confirm_password" class="form-control"
                     value="<?php echo $confirm_password; ?>">
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
-            <div class="form-group">
+            <div class="d-grid gap-2">
                 <input type="submit" class="btn btn-primary" value="Registrovat se">
-                <input type="reset" class="btn btn-default" value="Resetovat">
+                <a href="login.php" class="btn btn-secondary">Přihlásit</a>
             </div>
-            <p>Už máte účet? <a href="login.php">Přihlaste se</a>.</p>
         </form>
     </div>
 </body>
