@@ -28,8 +28,11 @@ require_once "scripts/config.php";
 
 <body>
     <div class="row mx-3">
+        <div class="col-12 d-flex justify-content-center">
+            <a href="index.php" class="btn btn-primary pink-primary mt-3">Zpět</a>
+        </div>
         <div class="col-12">
-            <h2 class="pt-2">Hlídání rozpočtu<h2>
+            <h2 class="pt-5">Hlídání rozpočtu<h2>
         </div>
         <div class="col-6">
             <label for="table_month" class="form-label">Měsíc</label>
@@ -39,33 +42,34 @@ require_once "scripts/config.php";
             <label for="table_year" class="form-label">Rok</label>
             <input type="number" class="form-control" name="table_year" id="table_year">
         </div>
-        <div class="col-12 pt-3 d-flex justify-content">
+        <div class="col-12">
+            <label for="table_money" class="form-label">Rozpočet (v Kč)</label>
+            <input type="number" class="form-control" name="table_money" id="table_money">
+        </div>
+        <div class="col-12 pt-3 d-flex justify-content-center">
             <a id="writeTableBtn" class="btn btn-primary pink-primary">Vypsat</a>
+        </div>
+        <div class="col-xs-12 col-md-4" id="writeTableCont">
         </div>
     </div>
     <script>
     $(document).ready(function() {
-        $('#addFromValues').collapse('show');
-        $('#addFromText').collapse('hide');
-
-        $('#addInputFromVals').click(function() {
-            var inputFrom = $("#input_from").val();
-            var inputTo = $("#input_to").val();
-            var inputDay = $("#input_day").val();
-            var inputType = $("#input_type").val();
-
-            if (inputFrom && inputTo && inputDay) {
+        $('#writeTableBtn').click(function() {
+            var month = $("#table_month").val();
+            var year = $("#table_year").val();
+            var money = $("#table_money").val();
+            
+            if (month && year && money) {
                 $.ajax({
-                    url: 'scripts/addInputFromValues.php',
+                    url: 'scripts/moneyCheckScript.php',
                     type: 'post',
                     data: {
-                        input_from: inputFrom,
-                        input_to: inputTo,
-                        input_day: inputDay,
-                        input_type: inputType
+                        table_month: month,
+                        table_year: year,
+                        table_money: money,
                     },
                     success: function(response) {
-                        alert(response);
+                        $("#writeTableCont").html(response);
                     }
                 });
             } else {

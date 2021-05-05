@@ -39,24 +39,28 @@ require_once "scripts/config.php";
                 <div class="col-6">
                     <a href="scripts/logout.php" class="btn btn-danger pink-danger">Odhlásit</a>
                 </div>
-                <div class="row pt-5">
-                    <div class="col-6">
-                        <h4>Rozpočet</h4>
-                    </div>
-                    <div class="col-6">
-                        <a href="moneyCheck.php" class="btn btn-primary pink-primary">Zobrazit</a>
-                    </div>
-                </div>
-                <div class="row pt-5">
-                    <div class="col-6">
-                        <h4>Správa GPS</h4>
-                    </div>
-                    <div class="col-6">
-                        <a href="scripts/logout.php" class="btn btn-primary pink-primary">Zobrazit</a>
-                    </div>
-                </div>
+                <?php
+                    if($_SESSION["isAdmin"] == true){
+                        echo '<div class="row pt-5">';
+                        echo '<div class="col-6">';
+                        echo '<h4>Rozpočet</h4>';
+                        echo '</div>';
+                        echo '<div class="col-6">';
+                        echo '<a href="moneyCheck.php" class="btn btn-primary pink-primary">Zobrazit</a>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '<div class="row pt-5">';
+                        echo '<div class="col-6">';
+                        echo '<h4>Správa GPS</h4>';
+                        echo '</div>';
+                        echo '<div class="col-6">';
+                        echo '<a href="scripts/logout.php" class="btn btn-primary pink-primary">Zobrazit</a>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                ?>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 d-flex justify-content-center">
                         <h4 class="pt-5">Výpis<h4>
                     </div>
                     <?php
@@ -91,7 +95,7 @@ require_once "scripts/config.php";
                         <label for="table_year" class="form-label">Rok</label>
                         <input type="number" class="form-control" name="table_year" id="table_year">
                     </div>
-                    <div class="col-12 pt-3 d-flex justify-content">
+                    <div class="col-12 pt-3 d-flex justify-content-center">
                         <a id="writeTableBtn" class="btn btn-primary pink-primary">Vypsat</a>
                     </div>
                 </div>
@@ -99,7 +103,7 @@ require_once "scripts/config.php";
         </div>
         <div class="col-xs-12 col-md-4">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 d-flex justify-content-center">
                     <h4 class="pt-5">Přidat zápis<h4>
                 </div>
                 <div class="form-check pt-3">
@@ -141,7 +145,7 @@ require_once "scripts/config.php";
                                 <option value="6">Jiné</option>
                             </select>
                         </div>
-                        <div class="col pt-3">
+                        <div class="col pt-3 d-flex justify-content-center">
                             <button id="addInputFromVals" class="btn btn-primary pink-primary">Přidat zápis</button>
                         </div>
                     </form>
@@ -153,11 +157,7 @@ require_once "scripts/config.php";
             </div>
         </div>
         <div class="col-xs-12 col-md-4" id="writeTableCont">
-
-
         </div>
-
-
     </div>
     <script>
     $(document).ready(function() {
