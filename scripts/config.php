@@ -1,5 +1,5 @@
 <?php
-$testing = true;
+$testing = false;
 if($testing)
 {
     define('DB_SERVER', 'localhost');
@@ -9,10 +9,10 @@ if($testing)
 }
 else
 {
-    define('DB_SERVER', 'sql4.webzdarma.cz');
-    define('DB_USERNAME', 'cukrovkaxfcz1566');
-    define('DB_PASSWORD', 'Pgema333@');
-    define('DB_NAME', 'cukrovkaxfcz1566');
+    define('DB_SERVER', 'sql5.webzdarma.cz');
+    define('DB_USERNAME', 'rekolasysxfc6896');
+    define('DB_PASSWORD', 'S_JBbLBhwC993tcMtBv5');
+    define('DB_NAME', 'rekolasysxfc6896');
 }
  
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

@@ -1,6 +1,7 @@
 <?php
 require_once "config.php";
 
+$employees = [];
 
 $return = "";
 $sql = "SELECT inputs.user_id, inputs.t_from, inputs.t_to, inputs.activity, users.fName, users.lName,
@@ -12,19 +13,21 @@ $sql = "SELECT inputs.user_id, inputs.t_from, inputs.t_to, inputs.activity, user
 if ($result = mysqli_query($link, $sql)) {
     if(mysqli_num_rows($result) > 0){
         while ($row = mysqli_fetch_row($result)) {
-            $fName = $row[4];
-            $lName = $row[5];
-            $moneyRate = $row[6];
+            if(!isset($employees[$row[0]])){
+                $employees[$row[0]] = new Employee($row[4], $row[5], []);
+            }
+            
+            $employees[$row[0]]->moneyMade[] = getMoney(date_diff(date_create($row[1]), date_create($row[2])), $row[6], $row[0]);
+        }
 
-            $interval = date_diff(date_create($row[1]), date_create($row[2]));
-            $times[] = $interval;
-
-            $return .= '<tr>
-                    <td>' . $row [1]. '</td>
-                    <td>' . $row[2] . '</td>
-                    <td>' . $row[7] . '</td>
-                    <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . '</td>
-                </tr>';
+        foreach($employees as $employee){
+            $return = '
+            <tr>
+            <td>' . $employee->fName . '</td>
+            <td>' . $employee->lName . '</td>
+            <td>' . array_sum($employee->moneyMade) . '</td>
+            </tr>
+            ';
         }
     }
     else{
@@ -35,17 +38,14 @@ if ($result = mysqli_query($link, $sql)) {
 mysqli_close($link);
 
 if ($return != ""){
-    echo '<div class="col-12"><h4 class="pt-5">
-    Tabulka za měsíc číslo ' . $_POST["table_month"] . '
-    roku ' . $_POST["table_year"] . ' pracovníka ' . $lName . ' ' . $fName . '<h4></div>
-    <div class="table-responsive">
+    $moneyLost = sumAllMoney($employees);
+    echo '<div class="table-responsive">
     <table class="table table-hover">
     <thead>
     <tr>
-    <th scope="col">Od</th>
-    <th scope="col">Do</th>
-    <th scope="col">Činnost</th>
-    <th scope="col">Celkem</th>
+    <th scope="col">Jméno</th>
+    <th scope="col">Příjmení</th>
+    <th scope="col">Vyděláno</th>
     </tr>
     </thead>
     <tbody>' . $return . '</tbody>
@@ -53,20 +53,12 @@ if ($return != ""){
     <tr>
     <td scope="col">Celkem</td>
     <td scope="col"></td>
-    <td scope="col"></td>
-    <td scope="col">' . sumHours($times) . '</td>
+    <td scope="col"><b>' . $moneyLost . '</b> Kč</td>
     </tr>
     <tr>
-    <td scope="col">Hodinová mzda</td>
+    <td scope="col">Zbývá</td>
     <td scope="col"></td>
-    <td scope="col"></td>
-    <td scope="col"><b>' . $moneyRate . '</b> Kč/h</td>
-    </tr>
-    <tr>
-    <td scope="col">Vyděláno</td>
-    <td scope="col"></td>
-    <td scope="col"></td>
-    <td scope="col"><b>' . getMoney($times, $moneyRate) . '</b> Kč</td>
+    <td scope="col"><b>' . ($_POST["table_money"] - $moneyLost) . '</b> Kč</td>
     </tr>
     </tfoot>
     </table>
@@ -74,6 +66,20 @@ if ($return != ""){
 }
 else{
     echo "<p>Error, nebo špatně zadané údaje.</p>";
+}
+
+class Employee{
+    public $fName;
+    public $lName;
+    public $moneyMade;
+
+    function __construct($fName,
+    $lName,
+    $moneyMade) {
+        $this->fName = $fName;
+        $this->lName = $lName;
+        $this->moneyMade = $moneyMade;
+    }
 }
 
 function sumHours($times) {
@@ -89,16 +95,18 @@ function sumHours($times) {
     return sprintf('<b>%02d</b>h <b>%02d</b>m', $hours, $minutes);
 }
 
-function getMoney($times, $rate){
+function getMoney($time, $rate, $user){
     //vojeb
-    if($_POST["table_user"] == 1) $rate = 130;
+    if($user == 1) $rate = 130;
 
-    $money = 0;
-    foreach ($times as $time) {
-        $money += ($time->format('%H') * $rate);
-        $money += ($time->format('%i') / 60) * $rate;
+    return ($time->format('%H') * $rate) + ($time->format('%i') / 60) * $rate;
+}
+
+function sumAllMoney($employees){
+    $sum = 0;
+    foreach($employees as $employee){
+        $sum += array_sum($employee->moneyMade);
     }
-
-    return $money;
+    return $sum;
 }
 ?>
