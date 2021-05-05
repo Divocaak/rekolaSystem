@@ -22,40 +22,50 @@ require_once "scripts/config.php";
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>Rekola sys</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-4">
+    <div class="row mx-3">
+        <div class="col-xs-12 col-md-4">
             <div class="container">
-                <p><?php echo "Přihlášen jako <b>" . $_SESSION["fName"] . " " . $_SESSION["lName"] . "</b>";?>
+                <?php echo "<p data-user-id=" . $_SESSION["id"] . " id='userIdHolder'>Přihlášen jako <b>" . $_SESSION["fName"] . " " . $_SESSION["lName"] . "</b></p>";?>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <a href="changePass.php" class="btn btn-warning">Změnit heslo</a>
+                    <a href="changePass.php" class="btn btn-warning pink-warning">Změnit heslo</a>
                 </div>
                 <div class="col-6">
-                    <a href="scripts/logout.php" class="btn btn-danger">Odhlásit</a>
+                    <a href="scripts/logout.php" class="btn btn-danger pink-danger">Odhlásit</a>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-6">
+                        <h4>Rozpočet</h4>
+                    </div>
+                    <div class="col-6">
+                        <a href="moneyCheck.php" class="btn btn-primary pink-primary">Zobrazit</a>
+                    </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-6">
+                        <h4>Správa GPS</h4>
+                    </div>
+                    <div class="col-6">
+                        <a href="scripts/logout.php" class="btn btn-primary pink-primary">Zobrazit</a>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <a id="writeTableBtn" class="btn btn-primary">Vypsat</a>
-                    </div>
-                    <div class="col">
-                        <label for="table_month" class="form-label">Měsíc</label>
-                        <input type="number" class="form-control" name="table_month" id="table_month">
-                    </div>
-                    <div class="col">
-                        <label for="table_year" class="form-label">Rok</label>
-                        <input type="number" class="form-control" name="table_year" id="table_year">
+                    <div class="col-12">
+                        <h4 class="pt-5">Výpis<h4>
                     </div>
                     <?php
                         if($_SESSION["isAdmin"] == true){
-                            echo '<div class="col" data-user-id=' . $_SESSION["id"] . ' id="userIdHolder">';
+                            echo '<div class="col-12">';
                             echo '<p>Pracovník</p>';
                             echo '<select name="table_user" id="table_user" class="form-select" 
                             aria-label="Default select example">';
-
+                            
                             $sql = 'SELECT id, fName, lName FROM users;';
                             if ($result = mysqli_query($link, $sql)) {
                                 if(mysqli_num_rows($result) > 0){
@@ -72,26 +82,40 @@ require_once "scripts/config.php";
                             echo '</select>';
                             echo '</div>';
                         }
-                    ?>
+                        ?>
+                    <div class="col-6">
+                        <label for="table_month" class="form-label">Měsíc</label>
+                        <input type="number" class="form-control" name="table_month" id="table_month">
+                    </div>
+                    <div class="col-6">
+                        <label for="table_year" class="form-label">Rok</label>
+                        <input type="number" class="form-control" name="table_year" id="table_year">
+                    </div>
+                    <div class="col-12 pt-3 d-flex justify-content">
+                        <a id="writeTableBtn" class="btn btn-primary pink-primary">Vypsat</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-xs-12 col-md-4">
             <div class="row">
-                <div class="form-check">
+                <div class="col-12">
+                    <h4 class="pt-5">Přidat zápis<h4>
+                </div>
+                <div class="form-check pt-3">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Přidat z hodnot
                     </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check pt-3">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Přidat z textu
                     </label>
                 </div>
 
-                <div id="addFromValues">
+                <div id="addFromValues" class="pt-3">
                     <form>
                         <div class="col">
                             <label for="input_from" class="form-label">Den:</label>
@@ -117,18 +141,18 @@ require_once "scripts/config.php";
                                 <option value="6">Jiné</option>
                             </select>
                         </div>
-                        <div class="col">
-                            <button id="addInputFromVals" class="btn btn-primary">Přidat zápis</button>
+                        <div class="col pt-3">
+                            <button id="addInputFromVals" class="btn btn-primary pink-primary">Přidat zápis</button>
                         </div>
                     </form>
                 </div>
 
-                <div id="addFromText" class="collapse">
+                <div id="addFromText" class="collapse pt-3">
                     <p>TODO</p>
                 </div>
             </div>
         </div>
-        <div class="col-4" id="writeTableCont">
+        <div class="col-xs-12 col-md-4" id="writeTableCont">
 
 
         </div>

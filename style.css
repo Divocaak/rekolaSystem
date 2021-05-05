@@ -1,0 +1,25 @@
+body,
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.pink-primary {
+    background-color: #e05297;
+    border-color: #e05297;
+}
+
+.pink-secondary {
+    background-color: #f3bad6;
+    border-color: #f3bad6;
+}
+
+.pink-danger {
+    background-color: #ff1493;
+    border-color: #ff1493;
+}
+
+.pink-warning {
+    background-color: #ff91af;
+    border-color: #ff91af;
+}
