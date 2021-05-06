@@ -5,21 +5,86 @@ html {
 }
 
 .pink-primary {
-    background-color: #e05297;
-    border-color: #e05297;
+    background-color: #e42b83;
+    border-color: #e42b83;
+}
+
+.pink-primary:hover {
+    background-color: #b62269;
+    border-color: #b62269;
+}
+
+.pink-primary:focus {
+    background-color: #891a4f;
+    border-color: #891a4f;
+}
+
+.pink-primary:active {
+    background-color: #e9559c;
+    border-color: #e9559c;
+}
+
+.pink-primary:checked {
+    background-color: #721642;
+    border-color: #721642;
 }
 
 .pink-secondary {
-    background-color: #f3bad6;
-    border-color: #f3bad6;
+    background-color: #e95194;
+    border-color: #e95194;
+}
+
+.pink-secondary:hover {
+    background-color: #ba4176;
+    border-color: #ba4176;
+}
+
+.pink-secondary:focus {
+    background-color: #8c3159;
+    border-color: #8c3159;
+}
+
+.pink-secondary:active {
+    background-color: #ed74a9;
+    border-color: #ed74a9;
 }
 
 .pink-danger {
-    background-color: #ff1493;
-    border-color: #ff1493;
+    background-color: #ec5c9c;
+    border-color: #ec5c9c;
+}
+
+.pink-danger:hover {
+    background-color: #bd4a7d;
+    border-color: #bd4a7d;
+}
+
+.pink-danger:focus {
+    background-color: #8e375e;
+    border-color: #8e375e;
+}
+
+.pink-danger:active {
+    background-color: #f07db0;
+    border-color: #f07db0;
 }
 
 .pink-warning {
-    background-color: #ff91af;
-    border-color: #ff91af;
+    background-color: #ec77ab;
+    border-color: #ec77ab;
+}
+
+.pink-warning:hover {
+    background-color: #bd5f89;
+    border-color: #bd5f89;
+}
+
+.pink-warning:focus {
+    background-color: #8e4767;
+    border-color: #8e4767;
+}
+
+.pink-warning:active {
+    background-color: #f092bc;
+    border-color: #f092bc;
 }

@@ -79,6 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -99,8 +100,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Změnit heslo">
-                <a class="btn btn-link" href="index.php">Zrušit</a>
+                <input type="submit" class="btn btn-primary pink-primary" value="Změnit heslo">
+                <a class="btn btn-link pink-secondary" href="index.php">Zrušit</a>
             </div>
         </form>
     </div>
