@@ -104,6 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -120,14 +121,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
             </div>
-            <div class="form-group col-12<?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group col-12 <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                 <label>Heslo</label>
                 <input type="password" name="password" class="form-control">
                 <span class="help-block"><?php echo $password_err; ?></span>
             </div>
             <div class="d-grid gap-2">
-                <input type="submit" class="btn btn-primary" value="Přihlásit se">
-                <a href="register.php" class="btn btn-secondary">Registrovat</a>
+                <input type="submit" class="btn btn-primary pink-primary" value="Přihlásit se">
+                <a href="register.php" class="btn btn-secondary pink-secondary">Registrovat</a>
             </div>
         </form>
     </div>

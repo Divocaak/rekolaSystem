@@ -49,12 +49,13 @@ require_once "scripts/config.php";
                         echo '<a href="moneyCheck.php" class="btn btn-primary pink-primary">Zobrazit</a>';
                         echo '</div>';
                         echo '</div>';
+                        
                         echo '<div class="row pt-5">';
                         echo '<div class="col-6">';
                         echo '<h4>Správa GPS</h4>';
                         echo '</div>';
                         echo '<div class="col-6">';
-                        echo '<a href="scripts/logout.php" class="btn btn-primary pink-primary">Zobrazit</a>';
+                        echo '<a href="" class="btn btn-primary pink-primary">Zobrazit</a>';
                         echo '</div>';
                         echo '</div>';
                     }
@@ -107,13 +108,13 @@ require_once "scripts/config.php";
                     <h4 class="pt-5">Přidat zápis<h4>
                 </div>
                 <div class="form-check pt-3">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Přidat z hodnot
                     </label>
                 </div>
                 <div class="form-check pt-3">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Přidat z textu
                     </label>
