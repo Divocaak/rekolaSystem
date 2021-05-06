@@ -21,13 +21,11 @@ if ($result = mysqli_query($link, $sql)) {
         }
 
         foreach($employees as $employee){
-            $return = '
-            <tr>
+            $return .= '<tr>
             <td>' . $employee->fName . '</td>
             <td>' . $employee->lName . '</td>
-            <td>' . array_sum($employee->moneyMade) . '</td>
-            </tr>
-            ';
+            <td>' . array_sum($employee->moneyMade) . ' Kč</td>
+            </tr>';
         }
     }
     else{

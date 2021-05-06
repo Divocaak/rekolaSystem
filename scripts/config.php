@@ -1,5 +1,5 @@
 <?php
-$testing = false;
+$testing = true;
 if($testing)
 {
     define('DB_SERVER', 'localhost');
