@@ -1,7 +1,15 @@
 <?php
+require_once "../charts/lib/inc/chartphp_dist.php";
 require_once "config.php";
 
+
+$p = new chartphp();
+$p->title = "Nejdražší člověk";
+$p->chart_type = "pie";
+
 $employees = [];
+
+$graphUser = [];
 
 $return = "";
 $sql = "SELECT inputs.user_id, inputs.t_from, inputs.t_to, inputs.activity, users.fName, users.lName,
@@ -21,10 +29,14 @@ if ($result = mysqli_query($link, $sql)) {
         }
 
         foreach($employees as $employee){
+            $employeeMoney = array_sum($employee->moneyMade);
+            
+            $graphUser[0][$employee->fName] = [($employee->fName . " " . $employee->lName), $employeeMoney];
+            
             $return .= '<tr>
             <td>' . $employee->fName . '</td>
             <td>' . $employee->lName . '</td>
-            <td>' . array_sum($employee->moneyMade) . ' Kč</td>
+            <td>' . $employeeMoney . ' Kč</td>
             </tr>';
         }
     }
@@ -37,6 +49,11 @@ mysqli_close($link);
 
 if ($return != ""){
     $moneyLost = sumAllMoney($employees);
+    $moneyRemaining = ($_POST["table_money"] - $moneyLost);
+    
+    $graphUser[0]["moneyRemaining"] = ["Zbytek", $moneyRemaining];
+    $p->data = $graphUser;
+    
     echo '<div class="table-responsive">
     <table class="table table-hover">
     <thead>
@@ -56,11 +73,15 @@ if ($return != ""){
     <tr>
     <td scope="col">Zbývá</td>
     <td scope="col"></td>
-    <td scope="col"><b>' . ($_POST["table_money"] - $moneyLost) . '</b> Kč</td>
+    <td scope="col"><b>' . $moneyRemaining . '</b> Kč</td>
     </tr>
     </tfoot>
     </table>
-    </div>';
+    </div>
+    <div class="col-12">
+    ' . $p->render('c1') . '
+    </div>
+    ';
 }
 else{
     echo "<p>Error, nebo špatně zadané údaje.</p>";

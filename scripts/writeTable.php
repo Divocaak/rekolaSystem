@@ -1,5 +1,23 @@
 <?php
 require_once "config.php";
+require_once "../charts/lib/inc/chartphp_dist.php";
+
+$p = new chartphp();
+
+$heatmap_chart_data = array();
+for($a=0;$a<10;$a++)
+	for($b=0;$b<25;$b++)
+		$heatmap_chart_data[$a][$b] = rand(0,99);
+
+$p->data=$heatmap_chart_data;
+$p->chart_type = "heatmap";
+$p->heatmap_color = "violet"; // Options: green, orange, gray, hot, violet, black, blue, soft
+
+$p->title = "HeatMap Chart";
+$p->xlabel = "Department";
+$p->ylabel = "Performance";
+
+
 
 
 $return = "";
@@ -70,7 +88,11 @@ if ($return != ""){
     </tr>
     </tfoot>
     </table>
-    </div>';
+    </div>
+    <div class="col-12">
+    ' . $p->render('c1') . '
+    </div>
+    ';
 }
 else{
     echo "<p>Error, nebo špatně zadané údaje.</p>";
