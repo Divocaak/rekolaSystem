@@ -116,7 +116,7 @@ function sumHours($times) {
 
 function getMoney($time, $rate, $user){
     //vojeb
-    if($user == 1) $rate = 130;
+    if($user == 1) $rate = 125;
 
     return ($time->format('%H') * $rate) + ($time->format('%i') / 60) * $rate;
 }
