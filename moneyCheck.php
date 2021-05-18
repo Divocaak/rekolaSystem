@@ -24,6 +24,10 @@ require_once "scripts/config.php";
     <title>Rekola sys - Rozpočet</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="charts/lib/js/chartphp.css">
+    <script src="charts/lib/js/jquery.min.js"></script>
+    <script src="charts/lib/js/chartphp.js"></script>
 </head>
 
 <body>
@@ -58,7 +62,7 @@ require_once "scripts/config.php";
             var month = $("#table_month").val();
             var year = $("#table_year").val();
             var money = $("#table_money").val();
-            
+
             if (month && year && money) {
                 $.ajax({
                     url: 'scripts/moneyCheckScript.php',
