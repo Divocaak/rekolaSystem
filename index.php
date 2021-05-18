@@ -123,7 +123,7 @@ require_once "scripts/config.php";
                 <div id="addFromValues" class="pt-3">
                     <form>
                         <div class="col">
-                            <label for="input_from" class="form-label">Den:</label>
+                            <label for="input_day" class="form-label">Den:</label>
                             <input type="date" class="form-control" name="input_day" id="input_day">
                         </div>
                         <div class="col">

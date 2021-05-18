@@ -8,15 +8,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="../../style.css">
 </head>
 
 <body>
-    <div class="row" id="idHolder" data-input-id="<?php $_GET["inputId"];?>">
+    <div class="row mx-3" id="idHolder" data-input-id="<?php echo $_GET["inputId"];?>">
+        <p>Upravit záznam: <span
+                id="valueHolder"><?php echo "<b>" . (isset($_GET["start"]) ? $_GET["start"] : "start") . "</b> až <b>" . (isset($_GET["end"]) ? $_GET["end"] : "end") . "</b>";?></span>
+        </p>
         <div id="addFromValues" class="pt-3">
             <form>
                 <div class="col">
-                    <label for="input_from" class="form-label">Den:</label>
+                    <label for="input_day" class="form-label">Den:</label>
                     <input type="date" class="form-control" name="input_day" id="input_day">
                 </div>
                 <div class="col">
@@ -39,7 +44,7 @@
                     </select>
                 </div>
                 <div class="col pt-3 d-flex justify-content-center">
-                    <button id="addInputFromVals" class="btn btn-primary pink-primary">Upravit zápis</button>
+                    <button id="editInput" class="btn btn-primary pink-primary">Upravit zápis</button>
                 </div>
             </form>
         </div>
@@ -51,18 +56,23 @@
 
     <script>
     $(document).ready(function() {
-        $('#addInputFromVals').click(function() {
+        $('#editInput').click(function(event) {
+            event.preventDefault();
+
             var inputFrom = $("#input_from").val();
             var inputTo = $("#input_to").val();
             var inputDay = $("#input_day").val();
             var inputType = $("#input_type").val();
             var inputId = $("#idHolder").data("inputId");
-
+            var valueHolder = $("#valueHolder").text();
+            
             if (inputFrom && inputTo && inputDay) {
+
                 $.ajax({
-                    url: 'scripts/editInputBack.php',
+                    url: 'editInputBack.php',
                     type: 'post',
                     data: {
+                        valueHolder: valueHolder,
                         input_from: inputFrom,
                         input_to: inputTo,
                         input_day: inputDay,
@@ -71,6 +81,7 @@
                     },
                     success: function(response) {
                         alert(response);
+                        $('#valueHolder').html("data upravena")
                     }
                 });
             } else {

@@ -4,9 +4,9 @@ require_once "../config.php";
 $sql = "DELETE FROM inputs WHERE id=" . $_GET["inputId"] . ";";
 
 if (mysqli_query($link, $sql)) {
-  echo "Záznam odstraněn";
+  $return = "Záznam odstraněn";
 } else {
-  echo "Error při mazání záznamu: " . mysqli_error($link);
+  $return =  "Error při mazání záznamu: " . mysqli_error($link);
 }
 mysqli_close($link);
 ?>
@@ -25,7 +25,10 @@ mysqli_close($link);
 </head>
 
 <body>
-    <div class="row">
+    <div class="row mx-3">
+        <div class="col-12">
+            <p><?php echo $return; ?></p>
+        </div>
         <div class="col-12 pt-3 d-flex justify-content-center">
             <a href="../../index.php" class="btn btn-primary pink-primary">Zpět</a>
         </div>

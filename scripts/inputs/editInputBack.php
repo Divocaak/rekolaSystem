@@ -2,15 +2,10 @@
 session_start();
 require_once "../config.php";
 
-$sql = "UPDATE input SET user_id=" . $_SESSION["id"] . ",
-t_from=" . createTimeStamp($_POST["input_from"]) . ",
-t_to=" . createTimeStamp($_POST["input_to"]) . ",
-activity=" . $_POST["input_type"] . "
-WHERE id=" . $_POST["input_id"] . ";";
-
-$sql = "INSERT INTO inputs (user_id, t_from, t_to, activity) 
-VALUES (" . $_SESSION["id"] . ", '" . createTimeStamp($_POST["input_from"]) . "',
- '" . createTimeStamp($_POST["input_to"]) . "', " . $_POST["input_type"] . ");";
+$sql = 'UPDATE inputs SET t_from="' . createTimeStamp($_POST["input_from"]) . '",
+t_to="' . createTimeStamp($_POST["input_to"]) . '",
+activity=' . $_POST["input_type"] . '
+WHERE id=' . $_POST["input_id"] . ';';
 
 if (mysqli_query($link, $sql)) {
     echo "Záznam upraven";

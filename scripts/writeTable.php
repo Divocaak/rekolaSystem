@@ -42,7 +42,7 @@ if ($result = mysqli_query($link, $sql)) {
             $return .= '<tr>
                     <td>
                         <a href="scripts/inputs/removeInput.php?inputId=' . $row[8] . '" class="btn btn-danger pink-primary"><i class="bi bi-trash-fill"></i></a>
-                        <a href="scripts/inputs/editInput.php?inputId=' . $row[8] . '" class="btn btn-danger pink-secondary"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="scripts/inputs/editInput.php?inputId=' . $row[8] . '&&start=' . $row[1] . '&&end=' . $row[2] .'" class="btn btn-danger pink-secondary"><i class="bi bi-pencil-fill"></i></a>
                     </td>
                     <td>' . $row [1]. '</td>
                     <td>' . $row[2] . '</td>
@@ -52,13 +52,13 @@ if ($result = mysqli_query($link, $sql)) {
         }
     }
     else{
-        $return .= "<p>Error</p>";
+        $return = "Error";
     }
     mysqli_free_result($result);
 }
 mysqli_close($link);
 
-if ($return != ""){
+if ($return != "Error"){
     echo '<h4 class="pt-5">
     Tabulka za měsíc číslo ' . $_POST["table_month"] . '
     roku ' . $_POST["table_year"] . ' pracovníka ' . $lName . ' ' . $fName . '</h4>
@@ -105,7 +105,7 @@ if ($return != ""){
     '; */
 }
 else{
-    echo "<p>Error, nebo špatně zadané údaje.</p>";
+    echo "<p>Špatně zadané údaje, nebo prádné hodnoty</p>";
 }
 
 function sumHours($times) {
@@ -122,9 +122,6 @@ function sumHours($times) {
 }
 
 function getMoney($times, $rate){
-    //vojeb
-    if($_POST["table_user"] == 1) $rate = 125;
-
     $money = 0;
     foreach ($times as $time) {
         $money += ($time->format('%H') * $rate);
