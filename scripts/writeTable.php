@@ -1,6 +1,12 @@
 <?php
-require_once "config.php";
 require_once "../charts/lib/inc/chartphp_dist.php";
+require_once "config.php";
+
+$p = new chartphp();
+$p->title = "Rozložení činností";
+$p->chart_type = "pie";
+$activitiesSums = [];
+$graphActivity = [];
 
 /* $p = new chartphp();
 
@@ -39,16 +45,18 @@ if ($result = mysqli_query($link, $sql)) {
             $interval = date_diff(date_create($row[1]), date_create($row[2]));
             $times[] = $interval;
 
+            $activitiesSums[$row[7]][] = $interval;
+            
             $return .= '<tr>
-                    <td>
-                        <a href="scripts/inputs/removeInput.php?inputId=' . $row[8] . '" class="btn btn-danger pink-primary"><i class="bi bi-trash-fill"></i></a>
-                        <a href="scripts/inputs/editInput.php?inputId=' . $row[8] . '&&start=' . $row[1] . '&&end=' . $row[2] .'" class="btn btn-danger pink-secondary"><i class="bi bi-pencil-fill"></i></a>
-                    </td>
-                    <td>' . date_create($row[1])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
-                    <td>' . date_create($row[2])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
-                    <td>' . $row[7] . '</td>
-                    <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . '</td>
-                </tr>';
+            <td>
+            <a href="scripts/inputs/removeInput.php?inputId=' . $row[8] . '" class="btn btn-danger pink-primary"><i class="bi bi-trash-fill"></i></a>
+            <a href="scripts/inputs/editInput.php?inputId=' . $row[8] . '&&start=' . $row[1] . '&&end=' . $row[2] .'" class="btn btn-danger pink-secondary"><i class="bi bi-pencil-fill"></i></a>
+            </td>
+            <td>' . date_create($row[1])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
+            <td>' . date_create($row[2])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
+            <td>' . $row[7] . '</td>
+            <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . '</td>
+            </tr>';
         }
     }
     else{
@@ -59,6 +67,16 @@ if ($result = mysqli_query($link, $sql)) {
 mysqli_close($link);
 
 if ($return != "Error"){
+    foreach($activitiesSums as $key => $activity){
+        for($i = 0; $i < count($activity); $i++){
+            $graphActivity[0][$key] = [substr(md5(microtime()),rand(0,26),5), sumHours($activity)];
+        }
+    }
+
+    print_r($graphActivity);
+
+    $p->data = $graphActivity;
+
     echo '<h4 class="pt-5">
     Tabulka za měsíc číslo ' . $_POST["table_month"] . '
     roku ' . $_POST["table_year"] . ' pracovníka ' . $lName . ' ' . $fName . '</h4>
@@ -98,11 +116,11 @@ if ($return != "Error"){
     </tr>
     </tfoot>
     </table>
-    </div>';
-    /* <div class="col-12">
-    ' . print_r($out) . '
     </div>
-    '; */
+    <div class="col-12">
+    ' . $p->render('c1') . '
+    </div>
+    ';
 }
 else{
     echo "<p>Špatně zadané údaje, nebo prádné hodnoty</p>";

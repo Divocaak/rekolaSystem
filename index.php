@@ -24,6 +24,10 @@ require_once "scripts/config.php";
     <title>Rekola sys</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="charts/lib/js/chartphp.css">
+    <script src="charts/lib/js/jquery.min.js"></script>
+    <script src="charts/lib/js/chartphp.js"></script>
 </head>
 
 <body>
