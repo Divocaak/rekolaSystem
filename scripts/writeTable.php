@@ -44,8 +44,8 @@ if ($result = mysqli_query($link, $sql)) {
                         <a href="scripts/inputs/removeInput.php?inputId=' . $row[8] . '" class="btn btn-danger pink-primary"><i class="bi bi-trash-fill"></i></a>
                         <a href="scripts/inputs/editInput.php?inputId=' . $row[8] . '&&start=' . $row[1] . '&&end=' . $row[2] .'" class="btn btn-danger pink-secondary"><i class="bi bi-pencil-fill"></i></a>
                     </td>
-                    <td>' . $row [1]. '</td>
-                    <td>' . $row[2] . '</td>
+                    <td>' . date_create($row[1])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
+                    <td>' . date_create($row[2])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
                     <td>' . $row[7] . '</td>
                     <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . '</td>
                 </tr>';
