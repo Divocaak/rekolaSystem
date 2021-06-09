@@ -3,7 +3,7 @@ require_once "../charts/lib/inc/chartphp_dist.php";
 require_once "config.php";
 
 $p = new chartphp();
-$p->title = "Rozložení činností";
+$p->title = "Rozložení činností (v minutách)";
 $p->chart_type = "pie";
 $activitiesSums = [];
 $graphActivity = [];
@@ -69,12 +69,9 @@ mysqli_close($link);
 if ($return != "Error"){
     foreach($activitiesSums as $key => $activity){
         for($i = 0; $i < count($activity); $i++){
-            $graphActivity[0][$key] = [substr(md5(microtime()),rand(0,26),5), sumHours($activity)];
+            $graphActivity[0][$key] = [$key, sumMins($activity)];
         }
     }
-
-    print_r($graphActivity);
-
     $p->data = $graphActivity;
 
     echo '<h4 class="pt-5">
@@ -137,6 +134,16 @@ function sumHours($times) {
     $minutes -= $hours * 60;
 
     return sprintf('<b>%02d</b>h <b>%02d</b>m', $hours, $minutes);
+}
+
+function sumMins($times){
+    $minutes = 0;
+    foreach ($times as $time) {
+        $minutes += ($time->format('%H')) * 60;
+        $minutes += ($time->format('%i'));
+    }
+
+return $minutes;
 }
 
 function getMoney($times, $rate){
