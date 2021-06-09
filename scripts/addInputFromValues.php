@@ -2,9 +2,9 @@
 session_start();
 require_once "config.php";
 
-$sql = "INSERT INTO inputs (user_id, t_from, t_to, activity) 
+$sql = "INSERT INTO inputs (user_id, t_from, t_to, activity, distance) 
 VALUES (" . $_SESSION["id"] . ", '" . createTimeStamp($_POST["input_from"]) . "',
- '" . createTimeStamp($_POST["input_to"]) . "', " . $_POST["input_type"] . ");";
+ '" . createTimeStamp($_POST["input_to"]) . "', " . $_POST["input_type"] . ", " . $_POST["input_distance"] . ");";
 
 if (mysqli_query($link, $sql)) {
     echo "Záznam přidán do databáze";

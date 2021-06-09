@@ -112,13 +112,15 @@ require_once "scripts/config.php";
                     <h4 class="pt-5">Přidat zápis<h4>
                 </div>
                 <div class="form-check pt-3">
-                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault1" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Přidat z hodnot
                     </label>
                 </div>
                 <div class="form-check pt-3">
-                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input pink-primary" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Přidat z textu
                     </label>
@@ -150,6 +152,10 @@ require_once "scripts/config.php";
                                 <option value="6">Jiné</option>
                             </select>
                         </div>
+                        <div class="col collapse" id="distanceDriven">
+                            <label for="input_distance" class="form-label">Naježděno (zaokrouhleno na celé km)</label>
+                            <input type="number" class="form-control" name="distance" id="input_distance">
+                        </div>
                         <div class="col pt-3 d-flex justify-content-center">
                             <button id="addInputFromVals" class="btn btn-primary pink-primary">Přidat zápis</button>
                         </div>
@@ -168,12 +174,24 @@ require_once "scripts/config.php";
     $(document).ready(function() {
         $('#addFromValues').collapse('show');
         $('#addFromText').collapse('hide');
+        $('#distanceDriven').collapse('hide');
+        
+        $('#input_type').change(function() {
+            if ($(this).val() == 5) {
+                $('#distanceDriven').collapse('show');
+            }
+            else{
+                $('#distanceDriven').collapse('hide');
+            }
+        });
 
         $('#addInputFromVals').click(function() {
             var inputFrom = $("#input_from").val();
             var inputTo = $("#input_to").val();
             var inputDay = $("#input_day").val();
             var inputType = $("#input_type").val();
+
+            var inputDistance = inputType == 5 ? $("#input_distance").val() : 0;
 
             if (inputFrom && inputTo && inputDay) {
                 $.ajax({
@@ -183,7 +201,8 @@ require_once "scripts/config.php";
                         input_from: inputFrom,
                         input_to: inputTo,
                         input_day: inputDay,
-                        input_type: inputType
+                        input_type: inputType,
+                        input_distance: inputDistance
                     },
                     success: function(response) {
                         alert(response);

@@ -26,11 +26,11 @@ $p->ylabel = "Performance";
 $out = $p->render('c1'); */
 
 
-
+$totalDistance = 0;
 
 $return = "";
 $sql = "SELECT inputs.user_id, inputs.t_from, inputs.t_to, inputs.activity, users.fName, users.lName,
-    users.moneyRate, activities.name, inputs.id FROM inputs INNER JOIN users ON inputs.user_id=users.id
+    users.moneyRate, activities.name, inputs.id, inputs.distance FROM inputs INNER JOIN users ON inputs.user_id=users.id
     INNER JOIN activities ON inputs.activity=activities.id
     WHERE user_id=" . $_POST["table_user"] . " AND
     MONTH(inputs.t_from)=" . intval($_POST["table_month"]) . " AND YEAR(inputs.t_from)=" . intval($_POST["table_year"]) . ";";
@@ -46,6 +46,8 @@ if ($result = mysqli_query($link, $sql)) {
             $times[] = $interval;
 
             $activitiesSums[$row[7]][] = $interval;
+
+            $totalDistance += $row[9];
             
             $return .= '<tr>
             <td>
@@ -55,7 +57,7 @@ if ($result = mysqli_query($link, $sql)) {
             <td>' . date_create($row[1])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
             <td>' . date_create($row[2])->format("<b>j.</b> n. Y, <b>H:i</b>") . '</td>
             <td>' . $row[7] . '</td>
-            <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . '</td>
+            <td>' . $interval->format("<b>%H</b>h <b>%i</b>m") . ($row[9] > 0 ? ("\n(<b>" . $row[9] . "</b>km)") : "") . '</td>
             </tr>';
         }
     }
@@ -110,6 +112,37 @@ if ($return != "Error"){
     <td scope="col"></td>
     <td scope="col"></td>
     <td scope="col"><b>' . getMoney($times, $moneyRate) . '</b> Kč</td>
+    </tr>
+    ' . ($totalDistance > 0 ? '<tr><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr>
+    <td scope="col">Celkem</td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"><b>' . $totalDistance . '</b>km</td>
+    </tr>
+    <tr>
+    <td scope="col">Kilometrová mzda</td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"><b>8</b> Kč/km</td>
+    </tr>
+    <tr>
+    <td scope="col">Vyježděno</td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"><b>' . $totalDistance * 8 . '</b> Kč</td>
+    </tr>' : '') . '
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr>
+    <td scope="col">Finální suma</td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"></td>
+    <td scope="col"><b>' . (($totalDistance * 8) + getMoney($times, $moneyRate)) . '</b> Kč</td>
     </tr>
     </tfoot>
     </table>

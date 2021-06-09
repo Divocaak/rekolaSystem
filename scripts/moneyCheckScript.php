@@ -13,7 +13,7 @@ $graphUser = [];
 
 $return = "";
 $sql = "SELECT inputs.user_id, inputs.t_from, inputs.t_to, inputs.activity, users.fName, users.lName,
-    users.moneyRate, activities.name FROM inputs INNER JOIN users ON inputs.user_id=users.id
+    users.moneyRate, activities.name, inputs.distance FROM inputs INNER JOIN users ON inputs.user_id=users.id
     INNER JOIN activities ON inputs.activity=activities.id
     WHERE MONTH(inputs.t_from)=" . intval($_POST["table_month"]) . " AND 
     YEAR(inputs.t_from)=" . intval($_POST["table_year"]) . ";";
@@ -22,14 +22,16 @@ if ($result = mysqli_query($link, $sql)) {
     if(mysqli_num_rows($result) > 0){
         while ($row = mysqli_fetch_row($result)) {
             if(!isset($employees[$row[0]])){
-                $employees[$row[0]] = new Employee($row[4], $row[5], []);
+                $employees[$row[0]] = new Employee($row[4], $row[5], [], 0);
             }
             
             $employees[$row[0]]->moneyMade[] = getMoney(date_diff(date_create($row[1]), date_create($row[2])), $row[6], $row[0]);
+            $employees[$row[0]]->distanceDriven += $row[8];
         }
 
         foreach($employees as $employee){
             $employeeMoney = array_sum($employee->moneyMade);
+            $employeeMoney += $employee->distanceDriven * 8;
             
             $graphUser[0][$employee->fName] = [($employee->fName . " " . $employee->lName), $employeeMoney];
             
@@ -91,13 +93,15 @@ class Employee{
     public $fName;
     public $lName;
     public $moneyMade;
+    public $distanceDriven;
 
     function __construct($fName,
     $lName,
-    $moneyMade) {
+    $moneyMade, $distanceDriven) {
         $this->fName = $fName;
         $this->lName = $lName;
         $this->moneyMade = $moneyMade;
+        $this->distanceDriven = $distanceDriven;
     }
 }
 
