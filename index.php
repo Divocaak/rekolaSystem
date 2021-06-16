@@ -31,7 +31,7 @@ require_once "scripts/config.php";
 </head>
 
 <body>
-    <div class="row mx-3">
+    <div class="row m-3">
         <div class="col-xs-12 col-md-4">
             <div class="container">
                 <?php echo "<p data-user-id=" . $_SESSION["id"] . " id='userIdHolder'>Přihlášen jako <b>" . $_SESSION["fName"] . " " . $_SESSION["lName"] . "</b></p>";?>
@@ -163,7 +163,30 @@ require_once "scripts/config.php";
                 </div>
 
                 <div id="addFromText" class="collapse pt-3">
-                    <p>TODO</p>
+                    <p>
+                        Hodiny zapisujte tímto způsobem: </br>
+                        měsíc (číslem)/rok</br>
+                        .den) od do práce | od do práce</br></br>
+                        příklad:</br>
+                        6/2021</br>
+                        .3) 10:50 12:30 t | 12:30 13:45 d</br>
+                        .5) 11:50 13:40 d | 18:00 20:55 s !36!</br>
+                        ...</br></br>
+                        n = nespecifikováno</br>
+                        t = terén</br>
+                        d = dílna</br>
+                        g = baterky/GPS</br>
+                        s = svoz !kilometry!</br>
+                        j = jiné
+                    </p>
+                    <form method="POST" action="scripts/addInputFromText.php">
+                        <div class="col">
+                            <textarea id="input_text" name="input_text" rows="15" cols="35"></textarea>
+                        </div>
+                        <div class="col pt-3 d-flex justify-content-center">
+                            <button type="submit" id="addInputFromText" class="btn btn-primary pink-primary">Přidat zápis</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -175,12 +198,11 @@ require_once "scripts/config.php";
         $('#addFromValues').collapse('show');
         $('#addFromText').collapse('hide');
         $('#distanceDriven').collapse('hide');
-        
+
         $('#input_type').change(function() {
             if ($(this).val() == 5) {
                 $('#distanceDriven').collapse('show');
-            }
-            else{
+            } else {
                 $('#distanceDriven').collapse('hide');
             }
         });
