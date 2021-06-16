@@ -226,9 +226,9 @@ require_once "scripts/config.php";
                         input_type: inputType,
                         input_distance: inputDistance
                     },
-                    success: function(response) {
+                    complete: function(response){
                         alert(response);
-                    }
+                    },
                 });
             } else {
                 alert("Zadejte všechny údaje");
