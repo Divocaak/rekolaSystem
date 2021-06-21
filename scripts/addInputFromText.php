@@ -1,6 +1,7 @@
 <?php
 //echo $_POST["input_text"];
 $input = "6/2021 .3) 10:50 12:30 t | 12:30 13:45 d .5) 11:50 13:40 d | 18:00 20:55 s !36!";
+$input = preg_replace('/\s+/', '', $input);
 
 echo $input . "<br>";
 $slashPos = strpos($input, "/");
@@ -12,20 +13,18 @@ $input = substr($input, strpos($input, "."));
 
 echo "<br> mam y a m, jdu na inputy: <br>";
 echo $input . "<br>";
-
-
-//__________________________________ODSTRANIT MEZERY, PAK AŽ ZAČÍT TAHAT DATA_______
-//__________________________________ODSTRANIT MEZERY, PAK AŽ ZAČÍT TAHAT DATA_______
-//__________________________________ODSTRANIT MEZERY, PAK AŽ ZAČÍT TAHAT DATA_______
-
+echo "<br>";
 
 $inputs = [];
-for($i = 0; $i < substr_count($input, ".") + 1; $i++){
-    $curr = substr($input, 0, strpos($input, ".", 1) - 1);
+$iMax = substr_count($input, ".");
+for($i = 0; $i < $iMax; $i++){
+    echo "i: " . $i . "<br>";
+    $curr = substr($input, 0, (($i == ($iMax - 1)) ? strlen($input) : strpos($input, ".", 1)));
     echo "-" . $curr . "-<br>";
     
     $inputs[] = $curr;
-    $input = substr($input, strpos($input, ".", 1));
+    $input = str_replace($curr, "", $input);
+    echo "remaining: " . $input . "<br><br>";
 }
 echo "<br>";
 
@@ -33,8 +32,8 @@ $realInputs = [];
 for($i = 0; $i < count($inputs); $i++){
     $curr = $inputs[$i];
     
-    $day = substr($curr, 1, strpos($curr, ")") - 1);
-    $curr = substr($curr, strpos($curr, ")") + 2);
+    $day = substr($curr, 1, strpos($curr, ")"));
+    $curr = substr($curr, strpos($curr, ")")+1);
     echo "-" . $curr . "-<br>";
     echo "d: -" . $day . "-<br>";
     
