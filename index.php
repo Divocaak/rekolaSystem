@@ -54,14 +54,14 @@ require_once "scripts/config.php";
                         echo '</div>';
                         echo '</div>';
                         
-                        echo '<div class="row pt-5">';
+                        /* echo '<div class="row pt-5">';
                         echo '<div class="col-6">';
                         echo '<h4>Správa GPS</h4>';
                         echo '</div>';
                         echo '<div class="col-6">';
                         echo '<a href="" class="btn btn-primary pink-primary">Zobrazit</a>';
                         echo '</div>';
-                        echo '</div>';
+                        echo '</div>'; */
                     }
                 ?>
                 <div class="row">
@@ -167,17 +167,19 @@ require_once "scripts/config.php";
                         Hodiny zapisujte tímto způsobem: </br>
                         měsíc (číslem)/rok</br>
                         .den) od do práce | od do práce</br></br>
-                        příklad:</br>
-                        6/2021</br>
-                        .3) 10:50 12:30 t | 12:30 13:45 d</br>
-                        .5) 11:50 13:40 d | 18:00 20:55 s !36!</br>
-                        ...</br></br>
-                        n = nespecifikováno</br>
-                        t = terén</br>
-                        d = dílna</br>
-                        g = baterky/GPS</br>
-                        s = svoz !kilometry!</br>
-                        j = jiné
+                        <i>6<b>/</b>2021</br>
+                        <b>.</b>3<b>)</b> 10<b>:</b>50 12<b>:</b>30 <b>t |</b> 12<b>:</b>30 13<b>:</b>45 <b>d</b></br>
+                        <b>.</b>4<b>) -</b></br>
+                        <b>.</b>5<b>)</b> 11<b>:</b>50 13<b>:</b>40 <b>d |</b> 18<b>:</b>00 20<b>:</b>55 <b>s !</b>36<b>!</b></br>
+                        ...</i></br></br>
+                        <i><b>n</b></i> = nespecifikováno</br>
+                        <i><b>t</b></i> = terén</br>
+                        <i><b>d</b></i> = dílna</br>
+                        <i><b>g</b></i> = baterky/GPS</br>
+                        <i><b>s</b></i> = svoz !kilometry!</br>
+                        <i><b>j</b></i> = jiné<br><br>
+                        <i>.4) <b>-</b></i> = čtvrtého jsem nepracoval<br>
+                        <i>.1) 10:00 15:00 s !<b>0</b>!</i> = svážel jsem, ale ne jako řidič/s vozíkem za kolo (neproplácí se mi pohon. hmoty)
                     </p>
                     <form method="POST" action="scripts/addInputFromText.php">
                         <div class="col">

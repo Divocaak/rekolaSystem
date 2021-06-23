@@ -20,4 +20,22 @@ $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
+
+class Input{
+    public $day;
+    public $from;
+    public $to;
+    public $activity;
+    public $distanceDriven;
+
+    function __construct($day, $from,
+    $to,
+    $activity, $distanceDriven) {
+        $this->day = $day;
+        $this->from = $from;
+        $this->to = $to;
+        $this->activity = $activity;
+        $this->distanceDriven = $distanceDriven;
+    }
+}
 ?>
