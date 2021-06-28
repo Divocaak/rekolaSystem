@@ -36,6 +36,7 @@ for($i = 0; $i < count($inputs); $i++){
             $to = substr($curr, strpos($curr, ":", 3) - 2, 5);
             $a = substr($curr, strpos($curr, ":", 3) + 3, 1);
             
+            $dist = 0;
             if($a == "s"){
                 $mFirst = strpos($curr, "!") + 1;
                 $mSecond = strpos($curr, "!", $mFirst);
@@ -58,11 +59,33 @@ $returnTry = "";
 for($i = 0; $i < count($realInputs); $i++){
     $date = $realInputs[$i]->day . '. ' . $month . '. ' . $year . ' ';
 
+    $start = $date . $realInputs[$i]->from; 
+    $end = $date . $realInputs[$i]->to;
+    $act = $realInputs[$i]->activity;
+
     $returnTry .= '<tr>
-    <td>' . $date . $realInputs[$i]->from . '</td>
-    <td>' . $date . $realInputs[$i]->to . '</td>
-    <td>' . $realInputs[$i]->activity . ($realInputs[$i]->distanceDriven > 0 ? ' (' . $realInputs[$i]->distanceDriven . ')' : '') . '</td>
+    <td>' . dateTimeValidation($start) . '</td>
+    <td>' . dateTimeValidation($end) . '</td>
+    <td>' . actValidation($act) . ($realInputs[$i]->distanceDriven > 0 ? ' (' . $realInputs[$i]->distanceDriven . ')' : '') . '</td>
     </tr>';
+}
+
+function dateTimeValidation($in){
+    if(strlen($in) != 16 && strlen($in) != 17){
+        return '<i class="bi bi-x-square-fill text-danger"></i> ' . $in;
+    }
+    else{
+        return '<i class="bi bi-check-square-fill text-success"></i> ' . $in;
+    }
+}
+
+function actValidation($in){
+    if(!ctype_alpha($in)){
+        return '<i class="bi bi-x-square-fill text-danger"></i> ' . $in;
+    }
+    else{
+        return '<i class="bi bi-check-square-fill text-success"></i> ' . $in;
+    }
 }
 ?>
 <!doctype html>
